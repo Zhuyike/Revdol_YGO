@@ -34,9 +34,13 @@ function c170027.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local opt=Duel.AnnounceType(1-tp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	local sg=g:RandomSelect(1-tp,1)
-	Duel.ConfirmCards(1-tp,sg)
-	local tc=sg:GetFirst()
-	if (opt==0 and not tc:IsType(TYPE_MONSTER)) or (opt==1 and not tc:IsType(TYPE_SPELL)) or (opt==2 and not tc:IsType(TYPE_TRAP)) then
-		Duel.SendtoHand(a,nil,REASON_EFFECT)
+	if sg:GetCount()>0 then
+		Duel.ConfirmCards(1-tp,sg)
+		Duel.BreakEffect()
+		Duel.ShuffleHand(tp)
+		local tc=sg:GetFirst()
+		if (opt==0 and not tc:IsType(TYPE_MONSTER)) or (opt==1 and not tc:IsType(TYPE_SPELL)) or (opt==2 and not tc:IsType(TYPE_TRAP)) then
+			Duel.SendtoHand(a,nil,REASON_EFFECT)
+		end
 	end
 end
