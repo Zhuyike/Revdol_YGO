@@ -23,6 +23,11 @@ function c60602003.initial_effect(c)
 	e3:SetOperation(c60602003.desop)
 	c:RegisterEffect(e3)
 	e1:SetLabelObject(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e4:SetOperation(c60602003.regop)
+	c:RegisterEffect(e4)
 end
 function c60602003.atkcon(e)
 	local phase=Duel.GetCurrentPhase()
@@ -57,4 +62,30 @@ end
 function c60602003.desop(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(0)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+end
+function c60602003.regop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetCondition(c60602003.descon2)
+		e1:SetOperation(c60602003.desop2)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+	e:GetHandler():RegisterEffect(e1)
+	c60602003[e:GetHandler()]=e1
+end
+function c60602003.descon2(e,tp,eg,ep,ev,re,r,rp)
+	return tp~=Duel.GetTurnPlayer()
+end
+function c60602003.desop2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local ct=c:GetTurnCounter()
+	ct=1
+	c:SetTurnCounter(ct)
+	if ct==1 then
+		Duel.Destroy(c,REASON_RULE)
+	end
 end

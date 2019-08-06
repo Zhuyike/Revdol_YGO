@@ -58,8 +58,8 @@ end
 function c60602001.atkcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end
-function c60602001.spfilter(c)
-	return c:IsAbleToGraveAsCost() 
+function c60602001.spfilter(c,tp,g,sc)
+	return c:IsAbleToGraveAsCost()  and Duel.GetLocationCountFromEx(tp)>0
 end
 function c60602001.spcon(e,c)
 	if c==nil then return true end
