@@ -1,5 +1,6 @@
 --伊贞 卡缇娅·乌拉诺娃
 function c60602000.initial_effect(c)
+--
 	c:EnableReviveLimit()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
