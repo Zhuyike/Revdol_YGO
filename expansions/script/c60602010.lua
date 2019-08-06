@@ -2,6 +2,7 @@
 function c60602010.initial_effect(c)
 		--negate attack
 	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
