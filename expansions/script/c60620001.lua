@@ -5,14 +5,11 @@ function c60620001.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(c60620001.cost)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetCondition(c60620001.condition)
 	e1:SetTarget(c60620001.target)
 	e1:SetOperation(c60620001.activate)
 	c:RegisterEffect(e1)
-end
-function c60620001.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
 end
 function c60620001.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() 
