@@ -30,6 +30,6 @@ function c60602021.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SelectTarget(tp,c60602021.filter,tp,LOCATION_MZONE,0,1,1,nil,0x10fe,1)
 	 local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		tc:AddCounter(0x10fe,1)
+		tc:AddCounter(0x10fe,6)
 	end
 end
