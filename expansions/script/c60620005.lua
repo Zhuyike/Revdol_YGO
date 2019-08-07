@@ -16,6 +16,7 @@ function c60620005.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60620005.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
+	Duel.PayLPCost(tp,0)
 end
 function c60620005.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

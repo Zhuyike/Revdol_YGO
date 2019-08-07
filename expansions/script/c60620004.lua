@@ -12,6 +12,7 @@ function c60620004.initial_effect(c)
 end
 function c60620004.cost(e,tp,eg,ep,ev,re,r,rp,chk)
    if chk==0 then return true end
+	Duel.PayLPCost(tp,0)
 end
 function c60620004.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and Duel.GetCurrentChain()==0
