@@ -27,6 +27,7 @@ function c60602021.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 	Duel.SpecialSummonComplete()
+	Duel.BreakEffect()
 	Duel.SelectTarget(tp,c60602021.filter,tp,LOCATION_MZONE,0,1,1,nil,0x10fe,1)
 	 local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
