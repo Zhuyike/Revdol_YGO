@@ -14,15 +14,6 @@ function c60602003.initial_effect(c)
 	e2:SetCondition(c60602003.atkcon)
 	e2:SetValue(200)
 	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_PHASE+PHASE_END)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1)
-	e3:SetCondition(c60602003.descon)
-	e3:SetOperation(c60602003.desop)
-	c:RegisterEffect(e3)
-	e1:SetLabelObject(e3)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -47,45 +38,34 @@ function c60602003.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c60602003.spfilter,tp,LOCATION_MZONE,0,1,1,nil,ft)
-	 Duel.SendtoGrave(g,REASON_COST)
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local e3=e:GetLabelObject()
-		if Duel.GetTurnPlayer()==tp then
-			c:RegisterFlagEffect(60602003,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1)
-			e3:SetLabel(Duel.GetTurnCount()+1)
-		end
+	Duel.SendtoGrave(g,REASON_COST)
+end
+function c60602003.subcon(e,tp,eg,ep,ev,re,r,rp)
+	return true
+end
+function c60602003.subop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local ct=c:GetTurnCounter()
+	ct=ct+1
+	c:SetTurnCounter(ct)
+	if (ct==2 or ct>2) then
+		Duel.Destroy(c,REASON_RULE)
+		c:ResetFlagEffect(1082946)
 	end
-end
-function c60602003.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(60602003)>0 and Duel.GetTurnCount()==e:GetLabel()
-end
-function c60602003.desop(e,tp,eg,ep,ev,re,r,rp)
-	e:SetLabel(0)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function c60602003.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetCondition(c60602003.descon2)
-		e1:SetOperation(c60602003.desop2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
-	e:GetHandler():RegisterEffect(e1)
-	c60602003[e:GetHandler()]=e1
-end
-function c60602003.descon2(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
-end
-function c60602003.desop2(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local ct=c:GetTurnCounter()
-	ct=1
-	c:SetTurnCounter(ct)
-	if ct==1 then
-		Duel.Destroy(c,REASON_RULE)
-	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetCountLimit(1)
+	e1:SetRange(LOCATION_MZONE)
+	c:SetTurnCounter(0)
+	e1:SetCondition(c60602003.subcon)
+	e1:SetOperation(c60602003.subop)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN+RESET_SELF_TURN,2)
+	c:RegisterEffect(e1)
+	c:RegisterFlagEffect(1082946,RESET_PHASE+PHASE_END+RESET_OPPO_TURN+RESET_SELF_TURN,0,2)
+	c60602003[c]=e1
 end

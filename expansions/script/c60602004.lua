@@ -1,6 +1,7 @@
 --TOP牙膏
 function c60602004.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_MZONE)
@@ -30,7 +31,7 @@ function c60602004.subop(e,tp,eg,ep,ev,re,r,rp)
 	ct=ct+1
 	c:SetTurnCounter(ct)
 	if (ct==2 or ct>2) then
-		Duel.Destroy(c,REASON_RULE)
+		Duel.Destroy(c,REASON_EFFECT)
 		c:ResetFlagEffect(1082946)
 	end
 end
