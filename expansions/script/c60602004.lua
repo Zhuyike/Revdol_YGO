@@ -23,73 +23,42 @@ function c60602004.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60602004,2))
 	local g=Duel.SelectTarget(tp,c60602004.cfilter,tp,0,LOCATION_MZONE,1,1,e:GetHandler())
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
-	g:GetFirst():RegisterFlagEffect(60602004,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1,cid)
+end
+function c60602004.subop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local ct=c:GetTurnCounter()
+	ct=ct+1
+	c:SetTurnCounter(ct)
+	if (ct==2 or ct>2) then
+		Duel.Destroy(c,REASON_RULE)
+		c:ResetFlagEffect(1082946)
+	end
+end
+function c60602004.subcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetLabelObject()
+	local fid=e:GetLabel()
+	return c:GetFieldID()==fid
 end
 function c60602004.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
-	if c:IsRelateToEffect(e)  and tc:IsRelateToEffect(e) and tc:GetFlagEffectLabel(60602004)==cid then
-		c:SetCardTarget(tc)
-		e:SetLabelObject(tc)
-		c:ResetFlagEffect(60602004)
-		tc:ResetFlagEffect(60602004)
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+		local e1=Effect.CreateEffect(tc)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetCountLimit(1)
+		e1:SetRange(LOCATION_MZONE)
 		local fid=c:GetFieldID()
-		c:RegisterFlagEffect(60602004,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-		tc:RegisterFlagEffect(60602004,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-	   local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PHASE+PHASE_END)
-		e2:SetCountLimit(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DRAW)
-		e2:SetLabel(fid)
-		e2:SetLabelObject(e1)
-		e2:SetCondition(c60602004.rstcon)
-		e2:SetOperation(c60602004.rstop)
-		Duel.RegisterEffect(e2,tp)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e3:SetCode(EVENT_PHASE+PHASE_END)
-		e3:SetCountLimit(1)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DRAW)
-		e3:SetLabel(fid)
-		e3:SetLabelObject(tc)
-		e3:SetCondition(c60602004.agcon)
-		e3:SetOperation(c60602004.agop)
-		Duel.RegisterEffect(e3,1-tp)
-
+		e1:SetLabel(fid)
+		e1:SetLabelObject(c)
+		e1:SetCondition(c60602004.subcon)
+		e1:SetOperation(c60602004.subop)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN+RESET_SELF_TURN,2)
+		tc:SetTurnCounter(0)
+		tc:RegisterEffect(e1)
+		tc:RegisterFlagEffect(1082946,RESET_PHASE+PHASE_END+RESET_OPPO_TURN+RESET_SELF_TURN,0,2)
+		c60602004[tc]=e1
 	end
-end
-function c60602004.rcon(e)
-	return e:GetOwner():IsHasCardTarget(e:GetHandler()) and e:GetHandler():GetFlagEffect(60602004)~=0
-end
-function c60602004.rstcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if  c:GetFlagEffectLabel(60602004)==e:GetLabel() then
-		return not c:IsDisabled()
-	else
-		e:Reset()
-		return false
-	end
-end
-function c60602004.rstop(e,tp,eg,ep,ev,re,r,rp)
-	local te=e:GetLabelObject()
-	Duel.HintSelection(Group.FromCards(e:GetHandler()))
-end
-function c60602004.agcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=e:GetLabelObject()
-	if tc:GetFlagEffectLabel(60602004)==e:GetLabel()
-		and c:GetFlagEffectLabel(60602004)==e:GetLabel() then
-		return not c:IsDisabled()
-	else
-		e:Reset()
-		return false
-	end
-end
-function c60602004.agop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.SendtoGrave(tc,REASON_RULE)
-	
 end
