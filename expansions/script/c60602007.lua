@@ -31,6 +31,11 @@ function c60602007.initial_effect(c)
 	e4:SetTargetRange(0,LOCATION_MZONE)
 	e4:SetValue(c60602007.atlimit)
 	c:RegisterEffect(e4)
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e5:SetOperation(c60602007.regop)
+	c:RegisterEffect(e5)
 
 end
 function c60602007.atlimit(e,c)
@@ -51,31 +56,7 @@ end
 function c60602007.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 then
-		c:CompleteProcedure()
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetCondition(c60602007.descon)
-		e1:SetOperation(c60602007.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
-	e:GetHandler():RegisterEffect(e1)
-	c60602007[e:GetHandler()]=e1
-	end
-end
-function c60602007.descon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
-end
-function c60602007.desop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local ct=c:GetTurnCounter()
-	ct=1
-	c:SetTurnCounter(ct)
-	if ct==1 then
-		Duel.Destroy(c,REASON_RULE)
-	end
+	 Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
 end
 function c60602007.adval(e,c)
 	local g=Duel.GetMatchingGroup(c60602007.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -94,4 +75,33 @@ function c60602007.deval(e,c)
 		local tg,val=g:GetMaxGroup(Card.GetDefense)
 		return val
 	end
+end
+function c60602007.subcon(e,tp,eg,ep,ev,re,r,rp)
+	return true
+end
+function c60602007.subop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local ct=c:GetTurnCounter()
+	ct=ct+1
+	c:SetTurnCounter(ct)
+	if (ct==2 or ct>2) then
+		Duel.Destroy(c,REASON_RULE)
+		c:ResetFlagEffect(1082946)
+	end
+end
+function c60602007.regop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetCountLimit(1)
+	e1:SetRange(LOCATION_MZONE)
+	c:SetTurnCounter(0)
+	e1:SetCondition(c60602007.subcon)
+	e1:SetOperation(c60602007.subop)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN+RESET_SELF_TURN,2)
+	c:RegisterEffect(e1)
+	c:RegisterFlagEffect(1082946,RESET_PHASE+PHASE_END+RESET_OPPO_TURN+RESET_SELF_TURN,0,2)
+	c60602007[c]=e1
 end
