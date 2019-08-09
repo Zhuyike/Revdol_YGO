@@ -31,5 +31,5 @@ function c170013.e1op(e,tp,eg,ep,ev,re,r,rp)
 	c:AddCounter(0x10ff,1)
 end
 function c170013.atk(e,c)
-	return c:GetCounter(0x10ff) * 200
+	return Duel.GetCounter(0,1,1,0x10ff)*200
 end
