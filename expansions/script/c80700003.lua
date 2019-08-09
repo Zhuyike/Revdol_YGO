@@ -30,24 +30,23 @@ function c80700003.activate(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e1)
 	end
 end
-function c80700003.eqfilter(c,tc,e,tp)
+function c80700003.eqfilter(c,tc)
 	return c:IsLevelBelow(10)
 		and c:GetOriginalRace()==tc:GetOriginalRace()
 		and c:GetOriginalAttribute()==tc:GetOriginalAttribute()
-	  --  and not c:IsForbidden() 
+		and not c:IsForbidden() 
 end
 function c80700003.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c80700003.eqfilter,tp,LOCATION_HAND,0,1,nil,tp,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_HAND)
-   -- Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 end
 function c80700003.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c80700003.eqfilter),tp,LOCATION_HAND,0,1,1,nil,tp,c)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c80700003.eqfilter),tp,LOCATION_HAND,0,1,1,nil,tc)
 	local tc=g:GetFirst()
 	if tc then
 		if not Duel.Equip(tp,tc,c,true) then return end
