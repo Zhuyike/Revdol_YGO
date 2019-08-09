@@ -6,9 +6,12 @@ function c99999999.initial_effect(c)
 	e1:SetOperation(c99999999.op)
 	c:RegisterEffect(e1)	
 end
-function c99999999.activate(e,tp,eg,ep,ev,re,r,rp)
-	math.randomseed(os.time())
-	for i=1,5 do
-	print(math.random())
-	end
+function c99999999.op(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Recover(e:GetHandlerPlayer(),100,REASON_EFFECT)
 end
+--function c99999999.activate(e,tp,eg,ep,ev,re,r,rp)
+--	math.randomseed(os.time())
+--	for i=1,5 do
+--	print(math.random())
+--	end
+--end

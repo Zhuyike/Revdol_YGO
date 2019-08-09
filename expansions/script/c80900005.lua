@@ -30,7 +30,7 @@ function c80900005.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c80900005.filter(c)
-	return  c:IsSetCard(0xfff7)  and c:IsFaceup() 
+	return  c:IsSetCard(0xfff7) and c:IsFaceup() 
 end
 function c80900005.descon(e,c)
 	if c==nil then return true end
