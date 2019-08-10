@@ -38,7 +38,7 @@ function c170002.filter(c)
 end
 function c170002.e2tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and c170002.filter(chkc) end
-	if chk==0 then return true end
+	if chk==0 then return Duel.IsExistingMatchingCard(c170002.filter,tp,0,LOCATION_SZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,c170002.filter,tp,nil,LOCATION_SZONE,1,1,e:GetHandler())
 end
