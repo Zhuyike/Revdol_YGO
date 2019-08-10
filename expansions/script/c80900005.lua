@@ -29,10 +29,9 @@ function c80900005.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function c80900005.filter(c)
+function c80900005.sdfilter(c)
 	return  c:IsSetCard(0xfff7) and c:IsFaceup() 
 end
-function c80900005.descon(e,c)
-	if c==nil then return true end
-	return  Duel.IsExistingMatchingCard(c80900005.filter,c:GetControler(),0,LOCATION_MZONE,1,nil)
+function c80900005.descon(e)
+	return Duel.IsExistingMatchingCard(c80900005.sdfilter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
