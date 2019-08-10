@@ -49,6 +49,7 @@ function c60602001.initial_effect(c)
 	e7:SetValue(1)
 	c:RegisterEffect(e7)
 	local e8=Effect.CreateEffect(c)
+	e8:SetCategory(CATEGORY_COUNTER)
 	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e8:SetTarget(c60602001.cttg)
@@ -96,13 +97,12 @@ function c60602001.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60602001.ctfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 end
 function c60602001.ctop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(c60602001.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local sg=Duel.GetMatchingGroup(c60602001.ctfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local tc=sg:GetFirst()
 	while tc do
-	  --  tc:RemoveCounter(tp,0,0,0)
 		local oc=tc:GetCounter(0x10ff)
-	  --  tc:AddCounter(0x10fe,oc)
+		tc:RemoveCounter(tp,0x10ff,oc,REASON_EFFECT)
+		tc:AddCounter(0x10fe,oc)
 		tc=sg:GetNext()
 	end
- 
 end
