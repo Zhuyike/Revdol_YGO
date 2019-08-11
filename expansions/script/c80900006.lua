@@ -38,6 +38,7 @@ function c80900006.bkop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c80900006.bkfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil,e,tp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 end
 function c80900006.bkcon2(e)
 	return not Duel.IsExistingMatchingCard(c80900006.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

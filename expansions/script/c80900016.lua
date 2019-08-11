@@ -17,7 +17,7 @@ function c80900016.filter(c)
 	return c:IsCode(99999999) 
 end
 function c80900016.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c80900016.filter,tp,0,0,1,nil) and not c80900016.chain_solving
+	return Duel.IsExistingMatchingCard(c80900016.filter,tp,0,0,1,nil) --and not c80900016.chain_solving
 end
 function c80900016.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

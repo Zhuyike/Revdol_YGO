@@ -18,9 +18,8 @@ function c80900009.initial_effect(c)
 	e2:SetOperation(c80900009.drop)
 	c:RegisterEffect(e2)
 end
-function c80900009.cfilter(c)
+function c80900009.cfilter(c) 
 	return  c:IsRace(RACE_CREATORGOD) and  c:GetPreviousLocation()==LOCATION_MZONE 
-	and c:GetPreviousControler()==tp 
 end
 function c80900009.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c80900009.cfilter,1,nil,tp)
@@ -32,6 +31,7 @@ function c80900009.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c80900009.drop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)z
-	Duel.Draw(p,d,REASON_EFFECT)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+   -- local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)z
+	Duel.Draw(tp,1,REASON_EFFECT)
 end

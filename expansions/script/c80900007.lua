@@ -85,4 +85,5 @@ function c80900007.batop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c80900007.desfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 end
