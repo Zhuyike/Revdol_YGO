@@ -1,41 +1,40 @@
---清歌·冲浪·巨浪来袭
+--玉藻·沙滩·闪耀五连拍！
 function c80900011.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e1) 
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,80900011)
-	e2:SetCost(c80900011.cost)
-	e2:SetTarget(c80900011.target)
-	e2:SetOperation(c80900011.operation)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_ACTIVATE)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCondition(c80900011.spcon)
+	e2:SetTarget(c80900011.sptg)
+	e2:SetOperation(c80900011.spop)
 	c:RegisterEffect(e2)	
 end
-function c80900011.costfilter(c)
-	return c:IsAbleToGraveAsCost()  and c:IsRace(RACE_CREATORGOD)
+function c80900011.cfilter(c)
+	return  c:IsRace(RACE_CREATORGOD) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
-function c80900011.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return 
-	Duel.IsExistingMatchingCard(c80900011.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1)  end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c80900011.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
-	Duel.Release(g,REASON_COST)
+function c80900011.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c80900011.cfilter,1,nil,tp)
 end
-function c80900011.filter(c,e,tp)
-	return c:IsCode(99999999) 
+function c80900011.spfilter(c,e,tp)
+	return c:IsAttackBelow(2000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	and c:IsRace(RACE_CREATORGOD)
 end
-function c80900011.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return 
-	Duel.IsExistingMatchingCard(c80900011.filter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_DECK)
+function c80900011.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c80900011.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectTarget(tp,c80900011.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
-function c80900011.operation(e,tp,eg,ep,ev,re,r,rp)
-		local c=e:GetHandler()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,c80900011.filter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil,e,tp)
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-end
+
+function c80900011.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	end
+end	

@@ -1,5 +1,6 @@
 --泳装型伊莎贝拉·霍利
 function c80900004.initial_effect(c)
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -10,6 +11,7 @@ function c80900004.initial_effect(c)
 	e1:SetTarget(c80900004.sptg)
 	e1:SetOperation(c80900004.spop)
 	c:RegisterEffect(e1)
+	--set trap
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
