@@ -1,12 +1,12 @@
 --名称：贝拉·冲浪·全新泳衣
 function c80900007.initial_effect(c)
 	--activate
-   -- local e1=Effect.CreateEffect(c)
-   -- e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-   -- e1:SetType(EFFECT_TYPE_ACTIVATE)
-   -- e1:SetCode(EVENT_FREE_CHAIN)
-   -- e1:SetOperation(c80900007.activate)
-   -- c:RegisterEffect(e1)  
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetOperation(c80900007.activate)
+	c:RegisterEffect(e1)  
 	--Equiplimit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
