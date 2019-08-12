@@ -74,7 +74,7 @@ function c80900017.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c80900017.descon2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
-	return tc and eg:IsContains(tc) and tc:IsReason(REASON_DESTROY)
+	return tc and eg:IsContains(tc) 
 end
 function c80900017.desop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

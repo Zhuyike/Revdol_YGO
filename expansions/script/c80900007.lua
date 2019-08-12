@@ -7,21 +7,21 @@ function c80900007.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetOperation(c80900007.activate)
 	c:RegisterEffect(e1)  
-	--Equiplimit
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_EQUIP_LIMIT)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetValue(c80900007.eqlimit)
-	c:RegisterEffect(e2)
 	--Equip
+	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_EQUIP)
+	e2:SetType(EFFECT_TYPE_EQUIP)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetTarget(c80900007.eqtg)
+	e2:SetOperation(c80900007.eqop)
+	c:RegisterEffect(e2)
+	--Equiplimit
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_EQUIP)
-	e3:SetType(EFFECT_TYPE_EQUIP)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetTarget(c80900007.eqtg)
-	e3:SetOperation(c80900007.eqop)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_EQUIP_LIMIT)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetValue(c80900007.eqlimit)
 	c:RegisterEffect(e3)
 	--back to hand
 	local e4=Effect.CreateEffect(c)
@@ -55,7 +55,7 @@ function c80900007.eqfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_CREATORGOD)
 end
 function c80900007.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetLocation()==LOCATION_MZONE and c80900007.eqfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c80900007.eqfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c80900007.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,c80900007.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)

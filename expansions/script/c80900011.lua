@@ -1,9 +1,9 @@
 --玉藻·沙滩·闪耀五连拍！
 function c80900011.initial_effect(c)
-  --  local e1=Effect.CreateEffect(c)
-  --  e1:SetType(EFFECT_TYPE_ACTIVATE)
-  --  e1:SetCode(EVENT_FREE_CHAIN)
-   -- c:RegisterEffect(e1) 
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e1) 
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,8 +13,8 @@ function c80900011.initial_effect(c)
 	e2:SetOperation(c80900011.spop)
 	c:RegisterEffect(e2)	
 end
-function c80900011.cfilter(c,tp)
-	return c:IsRace(RACE_CREATORGOD)  and c:IsPreviousLocation(LOCATION_MZONE) 
+function c80900011.cfilter(c) 
+	return  c:IsRace(RACE_CREATORGOD) and  c:GetPreviousLocation()==LOCATION_MZONE 
 	and c:GetPreviousControler()==tp
 end
 function c80900011.spcon(e,tp,eg,ep,ev,re,r,rp)
