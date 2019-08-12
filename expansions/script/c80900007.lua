@@ -1,21 +1,14 @@
 --名称：贝拉·冲浪·全新泳衣
 function c80900007.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetOperation(c80900007.activate)
-	c:RegisterEffect(e1)  
-	--Equip
-	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_EQUIP)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetTarget(c80900007.eqtg)
-	e2:SetOperation(c80900007.eqop)
-	c:RegisterEffect(e2)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetTarget(c80900007.target)
+	e1:SetOperation(c80900007.operation)
+	c:RegisterEffect(e1)
 	--Equiplimit
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -23,67 +16,65 @@ function c80900007.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetValue(c80900007.eqlimit)
 	c:RegisterEffect(e3)
-	--back to hand
+	--Search Card
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCategory(CATEGORY_TOHAND)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetDescription(aux.Stringid(80900007,1))
+	e4:SetCategory(CATEGORY_DRAW)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetCode(EVENT_BATTLE_DESTROYING)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCondition(c80900007.batcon)
-	e4:SetTarget(c80900007.battg)
-	e4:SetOperation(c80900007.batop)
+	e4:SetCondition(c80900007.drcon)
+	e4:SetTarget(c80900007.drtg)
+	e4:SetOperation(c80900007.drop)
 	c:RegisterEffect(e4)
 end
-function c80900007.thfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0xfff9) and c:IsAbleToHand()
+function c80900007.dfilter(c)
+	return c:IsCode(99999999) and c:IsAbleToHand() and c:IsLocation(LOCATION_GRAVE)
 end
-function c80900007.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(c80900007.thfilter,tp,LOCATION_DECK,0,nil)
-	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(80900007,0)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=g:Select(tp,1,1,nil)
-		Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg)
+function c80900007.drcon(e,tp,eg,ep,ev,re,r,rp)
+	local ec=e:GetHandler():GetEquipTarget()
+	return Duel.GetMatchingGroupCount(c80900007.dfilter,tp,LOCATION_GRAVE,0,nil)>=1 and eg:GetFirst()==ec and Duel.GetAttacker()==ec
+end
+function c80900007.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(tp)
+	local g=Duel.SelectTarget(tp,c80900007.dfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND+CATEGORY_LEAVE_GRAVE,nil,0,tp,1)
+end
+function c80900007.drop(e,tp,eg,ep,ev,re,r,rp)
+	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_GRAVE) and tc:IsAbleToHand() then
+		Duel.SendtoHand(tc,p,REASON_EFFECT)
 	end
 end
 function c80900007.eqlimit(e,c)
-	return c:IsRace(RACE_CREATORGOD)
+	return c:IsRace(RACE_CREATORGOD) and c:IsFaceup()
 end
-function c80900007.eqfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_CREATORGOD)
+function c80900007.filter(c)
+	return c:IsRace(RACE_CREATORGOD) and c:IsFaceup()
 end
-function c80900007.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c80900007.eqfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c80900007.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+function c80900007.rfilter(c)
+	return c:IsSetCard(0xfff9) and (not c:IsCode(80900007)) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+end
+function c80900007.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c80900007.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c80900007.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(c80900007.rfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,c80900007.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c80900007.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
-function c80900007.eqop(e,tp,eg,ep,ev,re,r,rp)
+function c80900007.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		Duel.Equip(tp,c,tc)
-	end
-end
-function c80900007.desfilter(c,e,tp)
-	return c:IsCode(99999999) 
-end
-function c80900007.batcon(e,tp,eg,ep,ev,re,r,rp)
-	local ec=e:GetHandler():GetEquipTarget()
-	return ec and eg:IsContains(ec)
-end
-function c80900007.battg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return 
-	Duel.IsExistingMatchingCard(c80900007.desfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
-end
-function c80900007.batop(e,tp,eg,ep,ev,re,r,rp)
-		local c=e:GetHandler()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,c80900007.desfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,c80900007.rfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
+	end
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
+		Duel.Equip(tp,e:GetHandler(),tc)
+	end
 end
