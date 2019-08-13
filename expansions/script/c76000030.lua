@@ -36,7 +36,7 @@ function c76000030.con(e)
 	return not (f1==nil or f1:IsFacedown()) and (f2==nil or f2:IsFacedown())
 end
 function c76000030.sefilter(c)
-	return c:IsCode() or (c:IsSetCard(0xff00) and c:IsType(TYPE_FIELD))
+	return c:IsCode(92700001) or (c:IsSetCard(0xff00) and c:IsType(TYPE_FIELD))
 end
 function c76000030.setg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c76000030.sefilter,tp,LOCATION_DECK,0,1,nil) end

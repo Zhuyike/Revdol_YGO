@@ -1,5 +1,6 @@
 --玉藻·冲浪·翻车溺水
 function c80900012.initial_effect(c)
+	--SearchCard
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
