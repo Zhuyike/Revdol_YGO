@@ -23,6 +23,9 @@ function c76000040.initial_effect(c)
 	e2:SetValue(c76000040.val)
 	c:RegisterEffect(e2)
 end
+c76000040.material_setcode=0x8
+c76000040.card_code_list={99999999}
+c76000040.neos_fusion=true
 function c76000040.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
