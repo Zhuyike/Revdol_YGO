@@ -48,6 +48,16 @@ function c80900014.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e2:SetValue(def)
 		tc:RegisterEffect(e2)
+		if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+			local e3=Effect.CreateEffect(e:GetHandler())
+			e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+			e3:SetCode(EVENT_PHASE+PHASE_END)
+			e3:SetCountLimit(1)
+			e3:SetLabel(tc:GetBaseAttack())
+			e3:SetReset(RESET_PHASE+PHASE_END)
+			e3:SetOperation(c80900014.damop)
+			Duel.RegisterEffect(e3,tp)
+		end
 	end
 end
 function c80900014.gravecon(e,tp,eg,ep,ev,re,r,rp)
@@ -68,4 +78,7 @@ function c80900014.graveop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
+end
+function c80900014.damop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Damage(tp,e:GetLabel(),REASON_EFFECT)
 end

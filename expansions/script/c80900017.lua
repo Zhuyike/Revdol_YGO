@@ -40,7 +40,7 @@ function c80900017.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c80900017.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsCode(22500001)
+	return c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsCode(76000020)
 end
 function c80900017.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetLocation()==LOCATION_EXTRA and chkc:GetControler()==tp
