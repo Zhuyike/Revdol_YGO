@@ -21,7 +21,7 @@ function c80900004.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c80900004.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
+	if chk==0 then return e:GetHandler():IsReleasable() and c:IsAbleToGraveAsCost() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c80900004.spfilter(c,e,tp)
