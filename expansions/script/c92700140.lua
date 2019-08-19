@@ -22,7 +22,7 @@ function c92700140.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c92700140.filter1(c)
-	return c:IsSetCard(0xff01)  and c:IsAbleToHand()
+	return c:IsSetCard(0xffff)  and c:IsAbleToHand()
 end
 function c92700140.thtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_DECK) and c92700140.filter1(chkc) end

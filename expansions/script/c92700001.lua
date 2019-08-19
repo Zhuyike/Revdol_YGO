@@ -11,6 +11,7 @@ function c92700001.initial_effect(c)
    -- e2:SetCategory
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCost(c92700001.cost)
 	e2:SetOperation(c92700001.setop)
 end

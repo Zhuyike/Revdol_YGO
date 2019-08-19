@@ -15,7 +15,7 @@ function c76000100.initial_effect(c)
 	c:RegisterEffect(e1)   
 end
 function c76000100.secon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsPreviousLocation(LOCATION_EXTRA)
 end
 function c76000100.filter(c)
 	return  c:IsRace(RACE_CREATORGOD) and c:IsAbleToHand()

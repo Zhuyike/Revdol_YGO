@@ -2,7 +2,7 @@
 function c76000040.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeRep(c,99999999,2,true,true)
+	aux.AddFusionProcCodeRep(c,99999999,2,false,true)
 	aux.AddContactFusionProcedure(c,Card.IsAbleToGraveAsCost,LOCATION_HAND,0,Duel.SendtoGrave,REASON_COST) 
 	--SpecialSummon
 	local e1=Effect.CreateEffect(c)
@@ -23,11 +23,8 @@ function c76000040.initial_effect(c)
 	e2:SetValue(c76000040.val)
 	c:RegisterEffect(e2)
 end
-c76000040.material_setcode=0x8
-c76000040.card_code_list={99999999}
-c76000040.neos_fusion=true
 function c76000040.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsPreviousLocation(LOCATION_EXTRA)
 end
 function c76000040.spfilter(c,e,tp)
 	return c:IsLevelBelow(5) and c:IsRace(RACE_CREATORGOD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
