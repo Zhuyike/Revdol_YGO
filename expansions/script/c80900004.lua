@@ -21,7 +21,7 @@ function c80900004.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c80900004.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() and c:IsAbleToGraveAsCost() end
+	if chk==0 then return e:GetHandler():IsReleasable() and e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c80900004.spfilter(c,e,tp)
@@ -29,8 +29,8 @@ function c80900004.spfilter(c,e,tp)
 	and not c:IsSetCard(0xfff1)
 end
 function c80900004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	and Duel.IsExistingMatchingCard(c80900004.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return --Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	 Duel.IsExistingMatchingCard(c80900004.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c80900004.spop(e,tp,eg,ep,ev,re,r,rp)
