@@ -7,8 +7,8 @@ function c92700001.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetOperation(c92700001.activate)
 	c:RegisterEffect(e1) 
+	--set
 	local e2=Effect.CreateEffect(c)
-   -- e2:SetCategory
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
