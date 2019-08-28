@@ -19,7 +19,6 @@ function c92700240.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c92700240.filter(c,e,tp)
 	return c:IsRace(RACE_CREATORGOD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetCode())
 end
 function c92700240.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
