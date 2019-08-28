@@ -3,7 +3,7 @@ function c92700130.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0xfff7),aux.FilterBoolFunction(Card.IsRace,RACE_CREATORGOD),true)  
-	aux.AddContactFusionProcedure(c,Card.IsAbleToGraveAsCost,LOCATION_ONFIELD,0,aux.tdcfop(c))
+	aux.AddContactFusionProcedure(c,Card.IsAbleToGraveAsCost,LOCATION_MZONE,0,Duel.SendtoGrave,REASON_COST) 
 	--Recover
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_RECOVER)
