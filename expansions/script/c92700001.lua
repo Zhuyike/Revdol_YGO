@@ -12,8 +12,10 @@ function c92700001.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetCountLimit(1)
 	e2:SetCost(c92700001.cost)
 	e2:SetOperation(c92700001.setop)
+	c:RegisterEffect(e2)
 end
 function c92700001.thfilter(c)
 	return c:IsRace(RACE_CREATORGOD) and c:IsAbleToHand()
@@ -47,5 +49,25 @@ function c92700001.setop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.SSet(tp,tc)
 		Duel.ConfirmCards(1-tp,g)
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e3:SetRange(LOCATION_FZONE)
+	e3:SetTargetRange(1,0)
+	e3:SetValue(c92700001.aclimit)
+	tc:RegisterEffect(e3)
+	end
+end
+function c92700001.aclimit(e,re,tp)
+	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_SPELL) then return false end
+	local c=re:GetHandler()
+	return not c:IsLocation(LOCATION_SZONE) or c:GetFlagEffect(92700001)>0
+end
+function c92700001.aclimset(e,tp,eg,ep,ev,re,r,rp)
+	local tc=eg:GetFirst()
+	while tc do
+		tc:RegisterFlagEffect(92700001,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1)
+		tc=eg:GetNext()
 	end
 end
