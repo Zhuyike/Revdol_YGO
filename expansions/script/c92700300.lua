@@ -18,22 +18,22 @@ function c92700300.filter2(c)
 end
 function c92700300.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,3)
-		and Duel.IsExistingMatchingCard(c92700300.filter1,tp,LOCATION_HAND,0,1,e:GetHandler()) and Duel.IsExistingMatchingCard(c92700300.filter2,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+		and Duel.IsExistingMatchingCard(c92700300.filter1,tp,LOCATION_HAND,0,1,e:GetHandler()) and Duel.IsExistingMatchingCard(c92700300.filter2,tp,LOCATION_HAND,0,2,e:GetHandler()) end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,2,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
 end
 function c92700300.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local g1=Duel.GetMatchingGroup(c92700300.filter1,p,LOCATION_HAND,0,nil)
-	local g2=Duel.GetMatchingGroup(c92700300.filter2,p,LOCATION_HAND,0,nil)
-	g1:AddCard(g2:GetFirst())
-	if g1:GetCount()>=2 then
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-		local sg=g1:Select(p,2,2,nil)
-		Duel.ConfirmCards(1-p,sg)
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
-		Duel.ShuffleDeck(p)
+	if Duel.IsPlayerCanDraw(tp,3) and Duel.IsExistingMatchingCard(c92700300.filter1,tp,LOCATION_HAND,0,1,e:GetHandler()) and Duel.IsExistingMatchingCard(c92700300.filter2,tp,LOCATION_HAND,0,2,e:GetHandler()) then
+		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOGRAVE)
+		local sg=g1:Select(p,1,1,nil)
+		Duel.SendtoGrave(sg,REASON_EFFECT)
+		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOGRAVE)
+		local g2=Duel.GetMatchingGroup(c92700300.filter2,p,LOCATION_HAND,0,nil)
+		local cg=g2:Select(p,1,1,nil)
+		Duel.SendtoGrave(cg,REASON_EFFECT)
 		Duel.BreakEffect()
 		Duel.Draw(p,3,REASON_EFFECT)
 	end

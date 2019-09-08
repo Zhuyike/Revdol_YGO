@@ -33,9 +33,13 @@ function c92700240.op(e,tp,eg,ep,ev,re,r,rp)
 	while g:GetCount()>0 and ft>0 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
-		Duel.SpecialSummonStep(sg:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
+		local sc=sg:GetFirst()
+		Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
 		ft=ft-1
-		g:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
+		g:Remove(c92700240.selffilter,nil,sc)
 	end
 	Duel.SpecialSummonComplete()
+end
+function c92700240.selffilter(c,cc)
+	return c==cc
 end
