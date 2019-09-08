@@ -35,7 +35,6 @@ function c92700001.costfilter(c)
 end
 function c92700001.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c92700001.costfilter,tp,LOCATION_HAND,0,1,c) end
-	local g=Duel.IsExistingMatchingCard(c92700001.costfilter,tp,LOCATION_HAND,0,1,c)
 	Duel.DiscardHand(tp,c92700001.costfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 
@@ -50,19 +49,15 @@ function c92700001.setop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,tc)
 		Duel.ConfirmCards(1-tp,g)
 	local e3=Effect.CreateEffect(e:GetHandler())
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_OWNER_RELATE)
+	e3:SetCode(EFFECT_CANNOT_TRIGGER)
 	e3:SetRange(LOCATION_FZONE)
+	e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e3:SetTargetRange(1,0)
-	e3:SetValue(c92700001.aclimit)
+	e3:SetValue(true)
 	tc:RegisterEffect(e3)
 	end
-end
-function c92700001.aclimit(e,re,tp)
-	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_SPELL) then return false end
-	local c=re:GetHandler()
-	return not c:IsLocation(LOCATION_SZONE) or c:GetFlagEffect(92700001)>0
 end
 function c92700001.aclimset(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
