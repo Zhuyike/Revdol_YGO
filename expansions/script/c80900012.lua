@@ -6,6 +6,7 @@ function c80900012.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMINGS_CHECK_MONSTER+TIMING_DAMAGE_STEP)
+	e1:SetCountLimit(1,80900012)
 	e1:SetCost(c80900012.cost)
 	e1:SetTarget(c80900012.target)
 	e1:SetOperation(c80900012.activate)
@@ -20,7 +21,7 @@ function c80900012.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c80900012.filter(c)
-	return  c:IsRace(RACE_CREATORGOD) and c:IsAbleToHand()
+	return  c:IsSetCard(0xfffb) and c:IsAbleToHand()
 end
 function c80900012.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c80900012.filter,tp,LOCATION_DECK,0,1,nil) end

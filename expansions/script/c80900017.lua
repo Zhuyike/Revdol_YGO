@@ -4,7 +4,6 @@ function c80900017.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCost(c80900017.cost)
 	e1:SetTarget(c80900017.target)
@@ -12,19 +11,21 @@ function c80900017.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_LEAVE_FIELD_P)
 	e2:SetOperation(c80900017.checkop)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e3:SetCode(EVENT_LEAVE_FIELD)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetOperation(c80900017.desop)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 	--Destroy2
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetCondition(c80900017.descon2)
@@ -34,9 +35,12 @@ end
 function c80900017.costfilter(c)
 	return c:IsRace(RACE_CREATORGOD) and c:IsAbleToGraveAsCost()
 end
+function c80900017.newcostfilter(c,tp)
+	return Duel.GetLocationCountFromEx(tp,tp,c)>0 and c80900017.costfilter(c)
+end
 function c80900017.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c80900017.costfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
-	local g=Duel.SelectMatchingCard(tp,c80900017.costfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c80900017.newcostfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
+	local g=Duel.SelectMatchingCard(tp,c80900017.newcostfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c80900017.filter(c,e,tp)
@@ -45,8 +49,22 @@ end
 function c80900017.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetLocation()==LOCATION_EXTRA and chkc:GetControler()==tp
 		and chkc:IsCanBeSpecialSummoned(e,0,tp,true,false) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c80900017.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then
+		local checkEx=false
+		if Duel.GetLocationCountFromEx(tp)<=0 then
+			local mg=Duel.GetMatchingGroup(c80900017.costfilter,tp,LOCATION_MZONE,0,nil)
+			local gc=mg:GetFirst()
+			while gc do
+				if Duel.GetLocationCountFromEx(tp,tp,gc)>0 then
+					checkEx=true
+				end
+				gc=mg:GetNext()
+			end
+		else
+			checkEx=true
+		end
+		return Duel.IsExistingTarget(c80900017.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) and checkEx
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c80900017.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
