@@ -23,7 +23,7 @@ function c92700270.operation(e,tp,eg,ep,ev,re,r,rp)
 	elseif tc:IsType(TYPE_TRAP) then
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		if g:GetCount()>0 then
-			local tg=g:GetMinGroup(Card.GetAttack)
+			local tg=g:GetMinGroup(Card.GetDefense)
 			if tg:GetCount()>1 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 				local sg=tg:Select(tp,1,1,nil)
