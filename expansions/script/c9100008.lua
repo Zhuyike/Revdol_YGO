@@ -13,7 +13,7 @@ function c9100008.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c9100008.filter_con(c)
-	return c:IsSetCard(0xfff6) and c:IsRace(RACE_CREATORGOD)
+	return c:IsSetCard(0xfff6) and c:IsRace(RACE_CREATORGOD) and c:IsFaceup()
 end
 function c9100008.filter_target(c,e)
 	return c:IsSetCard(0xff01) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
