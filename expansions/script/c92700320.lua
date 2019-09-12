@@ -17,21 +17,11 @@ function c92700320.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
 	e1:SetTargetRange(1,0)
-	e:GetHandler():RegisterEffect(e1)   
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e2:SetType(EFFECT_TYPE_ACTIVATE)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetOperation(c92700320.thop)
-	e:GetHandler():RegisterEffect(e2) 
-end
-
-function c92700320.thfilter(c)
-	return c:IsRace(RACE_CREATORGOD) and c:IsAbleToHand()
-end
-function c92700320.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
+	e1:SetValue(1)
+	Duel.RegisterEffect(e1,tp)
+	Duel.BreakEffect()
 	local g=Duel.GetMatchingGroup(c92700320.thfilter,tp,LOCATION_DECK,0,nil)
 	if g:GetCount()>0  then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -39,4 +29,8 @@ function c92700320.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)
 	end
+end
+
+function c92700320.thfilter(c)
+	return c:IsRace(RACE_CREATORGOD) and c:IsAbleToHand()
 end
