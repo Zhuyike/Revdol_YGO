@@ -29,7 +29,7 @@ function c92700350.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c92700350.cfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsRace(RACE_CREATORGOD)
 end
 function c92700350.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(c92700350.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -49,7 +49,7 @@ function c92700350.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c92700350.filter1(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsType(TYPE_EFFECT)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsType(TYPE_EFFECT) and c:IsRace(RACE_CREATORGOD)
 end
 function c92700350.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c92700350.filter1,1,nil) end
@@ -65,5 +65,5 @@ function c92700350.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c92700350.distg(e,c)
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsRace(RACE_CREATORGOD)
 end
