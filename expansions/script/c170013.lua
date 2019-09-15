@@ -1,35 +1,37 @@
 --风铃子
 function c170013.initial_effect(c)
-	c:EnableCounterPermit(0x10ff)
-	c:SetCounterLimit(0x10ff,99999)
-	--add counter
+	--indes
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(170013,0))
-	e1:SetCategory(CATEGORY_COUNTER)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
-	e1:SetCondition(c170013.e1con)
-	e1:SetOperation(c170013.e1op)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(c170013.indes_battle)
 	c:RegisterEffect(e1)
-	--atk up
+	--indes
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetValue(c170013.indes_effect)
+	c:RegisterEffect(e3)
+	--SpecialSummon
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetValue(c170013.atk)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_SPSUMMON_PROC)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e2:SetRange(LOCATION_HAND)
+	e2:SetCondition(c170013.spcon)
 	c:RegisterEffect(e2)
 end
-c170013.counter_add_list={0x10ff}
-function c170013.e1con(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsFaceup()
+function c170013.indes_battle(e,c)
+	return c:GetAttack()>=2000
 end
-function c170013.e1op(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	c:AddCounter(0x10ff,1)
+function c170013.indes_effect(e,re,rp)
+	local tp=e:GetHandlerPlayer()
+	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,170009)
 end
-function c170013.atk(e,c)
-	return Duel.GetCounter(0,1,1,0x10ff)*200
+function c170013.spcon(e,c)
+	if c==nil then return true end
+	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,170009)
+		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end

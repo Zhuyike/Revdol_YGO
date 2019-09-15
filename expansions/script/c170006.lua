@@ -17,6 +17,10 @@ function c170006.initial_effect(c)
 	e2:SetTarget(c170006.e1tg)
 	e2:SetOperation(c170006.e1op)
 	c:RegisterEffect(e2)
+	--spsummon effect
+	local e3=e2:Clone()
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e3)
 end
 function c170006.filter(c)
 	return c:IsFaceup()
