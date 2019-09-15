@@ -1,5 +1,6 @@
 --狂风道人
 function c60602013.initial_effect(c)
+	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -10,6 +11,7 @@ function c60602013.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e2)
+	--SearchCard
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -23,9 +25,8 @@ function c60602013.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c60602013.fothfilter(c)
- return c:IsSetCard(0x130)  and c:IsAbleToHand()
+	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsLevelBelow(8) and c:IsAbleToHand()
 end
-
 function c60602013.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c60602013.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
