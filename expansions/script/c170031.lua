@@ -46,7 +46,7 @@ end
 function c170031.e2op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_ONFIELD) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
 	end
 end
 function c170031.efilter_spell(e,te)
