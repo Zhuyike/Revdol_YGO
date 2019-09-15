@@ -4,7 +4,7 @@ function c60602009.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(0,LOCATION_MZONE)
+	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetValue(c60602009.atlimit)
 	c:RegisterEffect(e1)
 
@@ -18,7 +18,7 @@ function c60602009.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c60602009.atlimit(e,c)
-	return c:IsFaceup() and (c:IsCode(60602000) or c:IsCode(60602001))
+	return c:IsFaceup() and c:IsSetCard(0xfff6)
 end
 function c60602009.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP) 
