@@ -1,12 +1,13 @@
 --系木
 function c60602017.initial_effect(c)
+	--DISABLE_EFFECT
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_BATTLE_CONFIRM)
 	e1:SetCondition(c60602017.condition)
 	e1:SetOperation(c60602017.operation)
 	c:RegisterEffect(e1)
-
+	--AVOID_BATTLE_DAMAGE
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)

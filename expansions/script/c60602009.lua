@@ -18,7 +18,7 @@ function c60602009.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c60602009.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0xfff6)
+	return c:IsFaceup() and c:IsSetCard(0xfff6) and c:IsType(TYPE_MONSTER)
 end
 function c60602009.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP) 
