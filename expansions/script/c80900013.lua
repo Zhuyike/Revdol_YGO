@@ -10,15 +10,18 @@ function c80900013.initial_effect(c)
 	e1:SetOperation(c80900013.spop)
 	c:RegisterEffect(e1)
 end
-function c80900013.filter(c)
-	return c:IsRace(RACE_CREATORGOD) 
+function c80900013.filter_faceup(c)
+	return c:IsRace(RACE_CREATORGOD) and c:IsFaceup()
+end
+function c80900013.filter(c,e,tp)
+	return c:IsRace(RACE_CREATORGOD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c80900013.spcon(e)
-	return Duel.GetMatchingGroupCount(c80900013.filter,tp,LOCATION_MZONE,0,nil)==1
+	return Duel.GetMatchingGroupCount(c80900013.filter_faceup,tp,LOCATION_MZONE,0,nil)==1
 end 
 function c80900013.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c80900013.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c80900013.filter,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.GetMatchingGroupCount(c80900013.filter_faceup,tp,LOCATION_MZONE,0,nil)==1 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c80900013.spop(e,tp,eg,ep,ev,re,r,rp)

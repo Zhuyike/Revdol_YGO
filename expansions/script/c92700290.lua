@@ -10,7 +10,7 @@ function c92700290.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(aux.tgoval)
+	e1:SetValue(c92700290.undes)
 	c:RegisterEffect(e1) 
 	--indestructable
 	local e2=Effect.CreateEffect(c)
@@ -18,7 +18,7 @@ function c92700290.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetValue(aux.tgoval)
+	e2:SetValue(c92700290.undes)
 	c:RegisterEffect(e2)
 	--todeck and draw
 	local e3=Effect.CreateEffect(c)
@@ -30,6 +30,9 @@ function c92700290.initial_effect(c)
 	e3:SetTarget(c92700290.target)
 	e3:SetOperation(c92700290.operation)
 	c:RegisterEffect(e3)   
+end
+function c92700290.undes(e,re,rp)
+	return true
 end
 function c92700290.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_EXTRA)
