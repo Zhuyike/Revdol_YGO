@@ -5,9 +5,15 @@ function c92700230.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,92700230)
+	e1:SetCost(c92700230.secost)
 	e1:SetTarget(c92700230.target)
 	e1:SetOperation(c92700230.activate)
 	c:RegisterEffect(e1)
+end
+function c92700230.secost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckLPCost(tp,1000) and
+	Duel.PayLPCost(tp,1000)
 end
 function c92700230.filter(c)
 	return (c:IsSetCard(0xfff8) or c:IsSetCard(0xfffa) or c:IsSetCard(0xfff9)) and c:IsAbleToHand()

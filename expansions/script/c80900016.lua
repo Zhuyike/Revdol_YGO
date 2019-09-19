@@ -42,7 +42,7 @@ function c80900016.secon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT)~=0 and eg:IsExists(c80900016.filter,1,nil,tp)
 end
 function c80900016.sefilter(c)
-	return c:IsSetCard(0xfff7) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xfff7) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsLevelBelow(4)
 end
 function c80900016.setarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(c80900016.sefilter,tp,LOCATION_DECK,0,nil)>0 end

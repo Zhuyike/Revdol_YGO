@@ -11,7 +11,7 @@ function c92700370.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c92700370.spfilter(c,e,tp)
-	return c:IsRace(RACE_CREATORGOD) and c:GetLevel()<=6
+	return c:IsRace(RACE_CREATORGOD) and c:GetLevel()<=5
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and c:IsCanBeEffectTarget(e)
 end
 function c92700370.filter_cannot_summon(e,c)
