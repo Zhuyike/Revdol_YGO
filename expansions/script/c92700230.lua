@@ -12,7 +12,7 @@ function c92700230.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c92700230.secost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) and
+	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
 end
 function c92700230.filter(c)
@@ -30,4 +30,3 @@ function c92700230.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
