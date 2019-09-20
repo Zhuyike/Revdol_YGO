@@ -3,7 +3,7 @@ function c76000070.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcCodeRep(c,99999999,1,true,true)
-	aux.AddContactFusionProcedure(c,Card.IsAbleToGraveAsCost,LOCATION_HAND,0,Duel.SendtoGrave,REASON_COST)
+	aux.AddContactFusionProcedure(c,nil,LOCATION_HAND,0,Duel.SendtoGrave,REASON_COST)
 	--SendtoGrave
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(76000070,0))
@@ -35,6 +35,9 @@ function c76000070.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
-		if tc:IsLocation(LOCATION_GRAVE) then Duel.Recover(tp,300,REASON_EFFECT) end
+		if tc:IsLocation(LOCATION_GRAVE) then
+			Duel.Recover(1-tp,300,REASON_EFFECT)
+			Duel.Recover(tp,300,REASON_EFFECT)
+		end
 	end
 end
