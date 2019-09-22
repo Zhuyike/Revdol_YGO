@@ -2,8 +2,8 @@
 function c76000040.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeRep(c,99999999,2,false,true)
-	aux.AddContactFusionProcedure(c,nil,LOCATION_HAND,0,Duel.SendtoGrave,REASON_COST) 
+	aux.AddFusionProcCodeRep(c,99999999,2,true,true)
+	aux.AddContactFusionProcedure(c,aux.TRUE,LOCATION_HAND,0,Duel.SendtoGrave,REASON_EFFECT)
 	--SpecialSummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(76000040,0))

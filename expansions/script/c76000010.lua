@@ -3,7 +3,7 @@ function c76000010.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcCodeRep(c,99999999,2,true,true)
-	aux.AddContactFusionProcedure(c,nil,LOCATION_HAND,0,Duel.SendtoGrave,REASON_COST)
+	aux.AddContactFusionProcedure(c,aux.TRUE,LOCATION_HAND,0,Duel.SendtoGrave,REASON_EFFECT)
 	--immune effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -36,7 +36,8 @@ function c76000010.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	if tc:GetCount()>0 then
-		Duel.SendtoGrave(tc,REASON_EFFECT)
-		if tc:GetFirst():IsLocation(LOCATION_GRAVE) then Duel.Recover(tp,500,REASON_EFFECT) end
+		if Duel.SendtoGrave(tc,REASON_EFFECT)>0 then
+			Duel.Recover(tp,500,REASON_EFFECT)
+		end
 	end
 end

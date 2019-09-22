@@ -23,7 +23,7 @@ end
 function c80900003.spcon(e,c,tp)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.GetMatchingGroupCount(c80900003.filter,tp,LOCATION_GRAVE,0,nil)
+		and Duel.GetMatchingGroupCount(c80900003.filter,tp,LOCATION_GRAVE,0,nil)==0
 end
 function c80900003.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsSetCard(0xfff9) and re:GetHandler():IsControler(tp)
