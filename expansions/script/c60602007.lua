@@ -17,31 +17,13 @@ function c60602007.initial_effect(c)
 	e2:SetCondition(c60602007.spcon2)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetOperation(c60602007.adop)
 	c:RegisterEffect(e3)
-	--atk
-   -- local e3=Effect.CreateEffect(c)
-   -- e3:SetType(EFFECT_TYPE_SINGLE)
-	--e3:SetCode(EFFECT_SET_ATTACK_FINAL)
-   -- e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_DELAY)
-   -- e3:SetRange(LOCATION_MZONE)
-   -- e3:SetCondition(c60602007.adcon)
-   -- e3:SetValue(c60602007.adval)
-   -- c:RegisterEffect(e3)
-	--den
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_SET_DEFENSE_FINAL)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_DELAY)
-	e4:SetRange(LOCATION_MZONE)
-	e3:SetCondition(c60602007.adcon)
-	e4:SetValue(c60602007.deval)
-	c:RegisterEffect(e4)
-	--atklimit
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
 	e5:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
@@ -72,36 +54,33 @@ end
 function c60602007.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	 Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
+	Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
 end
 function c60602007.adop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local att=0
+	local def=0
+	local tc=g:GetFirst()
+	while tc do
+		if tc:GetAttack()>att then
+			att=tc:GetAttack()
+		end
+		if tc:GetDefense()>def then
+			def=tc:GetDefense()
+		end
+		tc=g:GetNext()
+	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(c60602007.adval)
-	c:RegisterEffect(e1)
-end
-function c60602007.adcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
-end
-function c60602007.adval(e,c)
-	local g=Duel.GetMatchingGroup(c60602007.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if g:GetCount()==0 then 
-		return 0
-	else
-		local tg,val=g:GetMaxGroup(Card.GetAttack)
-		return val
-	end
-end
-function c60602007.deval(e,c)
-	local g=Duel.GetMatchingGroup(c60602007.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if g:GetCount()==0 then 
-		return 0
-	else
-		local tg,val=g:GetMaxGroup(Card.GetDefense)
-		return val
-	end
+	e1:SetCode(EFFECT_SET_ATTACK)
+	e1:SetValue(att)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e1,true)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_SET_DEFENSE)
+	e2:SetValue(def)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e2,true)
 end
