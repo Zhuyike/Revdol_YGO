@@ -13,7 +13,7 @@ function c60620006.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=eg:Filter(c60620006.filter3,nil,e,tp)
 	if g:GetCount()>0 then
-		Duel.GetControl(g,tp,PHASE_END,2)
+		Duel.GetControl(g,tp)
 		local gc=g:GetFirst()
 		while gc do
 			local e1=Effect.CreateEffect(c)
