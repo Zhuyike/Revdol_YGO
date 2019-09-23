@@ -1,5 +1,6 @@
 --花生酱
 function c60602009.initial_effect(c)
+	--atklimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
@@ -7,7 +8,7 @@ function c60602009.initial_effect(c)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetValue(c60602009.atlimit)
 	c:RegisterEffect(e1)
-
+	--IMMUNE_EFFECT
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)

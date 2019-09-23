@@ -24,7 +24,7 @@ function c60620002.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetValue(aux.imval1)
 	tg:RegisterEffect(e1)
 end
