@@ -33,7 +33,7 @@ function c60620006.activate2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60620006.filter3(c,e,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()~=tp and and c:IsRace(RACE_CREATORGOD)  c:IsRelateToEffect(e) and c:IsLocation(LOCATION_MZONE) and c:IsAbleToChangeControler()
+	return c:IsFaceup() and c:GetSummonPlayer()~=tp and c:IsRace(RACE_CREATORGOD) and c:IsRelateToEffect(e) and c:IsLocation(LOCATION_MZONE) and c:IsAbleToChangeControler()
 end
 function c60620006.filter2(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsRace(RACE_CREATORGOD) and c:GetSummonPlayer()~=tp and c:IsAbleToChangeControler()
