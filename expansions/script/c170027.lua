@@ -12,12 +12,13 @@ function c170027.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCondition(c170027.atkcon)
 	e2:SetTarget(c170027.atktg)
 	e2:SetOperation(c170027.atkop)
 	c:RegisterEffect(e2)
 end
---c170027.toss_coin=true
+c170027.toss_coin=true
 function c170027.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0
 end

@@ -58,8 +58,11 @@ function c170012.e1op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,3)
 	if g:GetCount()>0 then
 		if g:IsExists(c170012.filter,1,nil) then
+			local tc=g:Select(tp,1,1,nil)
+			Duel.SendtoHand(tc,tp,REASON_EFFECT)
+			Duel.DiscardDeck(tp,2,REASON_EFFECT)
+		else
 			Duel.DiscardDeck(tp,3,REASON_EFFECT)
 		end
-		Duel.ShuffleDeck(tp)
 	end
 end

@@ -1,11 +1,18 @@
 --系木
 function c60602017.initial_effect(c)
+	--DISABLE_EFFECT
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_BATTLE_CONFIRM)
 	e1:SetCondition(c60602017.condition)
 	e1:SetOperation(c60602017.operation)
 	c:RegisterEffect(e1)
+	--AVOID_BATTLE_DAMAGE
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e2:SetValue(1)
+	c:RegisterEffect(e2)
 end
 function c60602017.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -20,11 +27,9 @@ function c60602017.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
 	tc:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
-	e2:SetReset(RESET_PHASE+PHASE_END,2)
 	tc:RegisterEffect(e2)
 end

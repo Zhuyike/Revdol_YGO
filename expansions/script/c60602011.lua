@@ -30,7 +30,7 @@ function c60602011.drop(e,tp,eg,ep,ev,re,r,rp)
 	elseif tc:IsType(TYPE_SPELL) then
 		Duel.Damage(1-tp,3000,REASON_EFFECT)
 	elseif tc:IsType(TYPE_TRAP) then
-		Duel.Damage(1-tp,1000,REASON_EFFECT)
+		Duel.Damage(tp,1000,REASON_EFFECT)
 	end
 	Duel.ShuffleHand(tp)
 end

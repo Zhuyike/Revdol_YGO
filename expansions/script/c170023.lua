@@ -40,21 +40,10 @@ function c170023.initial_effect(c)
 	e5:SetCode(EFFECT_ADD_SETCODE)
 	e5:SetValue(0xfff0)
 	c:RegisterEffect(e5)
-	--self Destroy
-	--local e7=Effect.CreateEffect(c)
-	--e7:SetType(EFFECT_TYPE_SINGLE)
-	--e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	--e7:SetCode(EFFECT_SELF_DESTROY)
-	--e7:SetRange(LOCATION_SZONE)
-	--e7:SetCondition(c170023.descon)
-	--c:RegisterEffect(e7)
 end
 function c170023.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xfff0)
 end
---function c170023.descon(e)
---	return not Duel.IsExistingMatchingCard(c170023.desfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
---end
 function c170023.filter(c)
 	return c:IsFaceup() and c:IsControlerCanBeChanged()
 end

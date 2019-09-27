@@ -1,54 +1,68 @@
 --三岁嗔顽
 function c60602015.initial_effect(c)
-	--change pos
+	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(60602015,0))
-	e1:SetCategory(CATEGORY_POSITION)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_BATTLE_DESTROYED)
-	e1:SetCondition(c60602015.poscon2)
-	e1:SetTarget(c60602015.postg2)
-	e1:SetOperation(c60602015.posop2)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetCode(CATEGORY_SPECIAL_SUMMON)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetCondition(c60602015.spcon)
+	e1:SetTarget(c60602015.sptg)
+	e1:SetOperation(c60602015.spop)
 	c:RegisterEffect(e1)
-	--add flower
+	--atk up
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(60602015,1))
-	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_GRAVE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCost(aux.bfgcost)
-	e2:SetCondition(c60602015.poscon1)
-	e2:SetOperation(c60602015.activate)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCategory(CATEGORY_ATKCHANGE)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetCost(c60602015.atkcost)
+	e2:SetOperation(c60602015.atkop)
 	c:RegisterEffect(e2)
 end
-function c60602015.activate(e,tp,eg,ep,ev,re,r,rp)
+function c60602015.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	local gc=g:GetFirst()
-	gc:AddCounter(0x10ff,1)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(1500)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e1)
 end
-function c60602015.poscon1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+function c60602015.filter(c)
+	return c:IsFaceup() and c:IsPosition(POS_ATTACK) 
 end
-function c60602015.poscon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
-		and e:GetHandler():GetReasonCard():IsRelateToBattle()
+function c60602015.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c60602015.filter,tp,0,LOCATION_MZONE,1,nil)
 end
-function c60602015.postg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rc=e:GetHandler():GetReasonCard()
-	if chk==0 then return rc:IsCanTurnSet() end
-	Duel.SetTargetCard(rc)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,rc,1,0,0)
+function c60602015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function c60602015.posop2(e,tp,eg,ep,ev,re,r,rp)
-	local rc=Duel.GetFirstTarget()
-	if rc:IsFaceup() and rc:IsRelateToEffect(e) then
-		Duel.ChangePosition(rc,POS_FACEDOWN_DEFENSE)
-		local e1=Effect.CreateEffect(e:GetHandler())
+function c60602015.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e1:SetValue(c60602015.efilter)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		rc:RegisterEffect(e1)
+		c:RegisterEffect(e1)
+		Duel.SpecialSummonComplete()
 	end
+end
+function c60602015.efilter(e,te)
+	return te:IsActiveType(TYPE_SPELL) 
+end
+function c60602015.costfilter(c)
+	return  c:IsType(TYPE_SPELL)
+end
+function c60602015.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c60602015.costfilter,tp,LOCATION_HAND,0,1,c) end
+	local g=Duel.IsExistingMatchingCard(c60602015.costfilter,tp,LOCATION_HAND,0,1,c)
+	Duel.DiscardHand(tp,c60602015.costfilter,1,1,REASON_COST+REASON_DISCARD)
 end

@@ -17,17 +17,17 @@ end
 function c60620001.condition(e,tp,eg,ep,ev,re,r,rp)
 		if c==nil then return true end
 	local tp=c:GetControler()
-	return  Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)==5
+	return  Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)==3
 end
 function c60620001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and c60620001.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c60620001.filter,tp,0,LOCATION_MZONE,5,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c60620001.filter,tp,0,LOCATION_MZONE,3,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c60620001.filter,tp,0,LOCATION_ONFIELD,2,2,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,2,0,0)
+	local g=Duel.SelectTarget(tp,c60620001.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end
 function c60620001.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(sg,nil,1,REASON_EFFECT)
 end

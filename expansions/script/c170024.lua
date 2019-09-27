@@ -25,14 +25,16 @@ function c170024.initial_effect(c)
 	c:RegisterEffect(e3)
 	--leave
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e4:SetCode(EVENT_LEAVE_FIELD)
+	e4:SetCategory(CATEGORY_REMOVE)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_DESTROYED)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e4:SetOperation(c170024.desop)
 	c:RegisterEffect(e4)
 end
 function c170024.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
-	if tc and tc:IsLocation(LOCATION_MZONE) then
+	if tc and tc:IsLocation(LOCATION_MZONE) and tc:IsAbleToRemove(tp) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
