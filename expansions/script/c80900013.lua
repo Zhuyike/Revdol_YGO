@@ -21,7 +21,7 @@ function c80900013.spcon(e)
 end 
 function c80900013.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c80900013.filter,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.GetMatchingGroupCount(c80900013.filter_faceup,tp,LOCATION_MZONE,0,nil)==1 end
+		and Duel.GetMatchingGroupCount(c80900013.filter,tp,LOCATION_HAND,0,nil,e,tp)>0 and Duel.GetMatchingGroupCount(c80900013.filter_faceup,tp,LOCATION_MZONE,0,nil)==1 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c80900013.spop(e,tp,eg,ep,ev,re,r,rp)

@@ -44,7 +44,7 @@ function c93000080.filter(c)
 	return c:IsSetCard(0xff11) and c:IsSetCard(0xff12) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function c93000080.spcon(e,c)
-	return  Duel.IsExistingMatchingCard(c93000080.filter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetMatchingGroupCount(c93000080.filter,tp,LOCATION_MZONE,0,nil) > 0
 end
 function c93000080.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
