@@ -19,6 +19,9 @@ function c10010030.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMatchingGroupCount(c10010030.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c10010030.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,2,2,nil)
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		if g:GetCount()>0 then
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g)
+		end
 	end
 end
