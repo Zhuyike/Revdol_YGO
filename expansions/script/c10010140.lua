@@ -29,7 +29,7 @@ function c10010140.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c10010140.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsSetCard(0xfff2)
 end
 function c10010140.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c10010140.cfilter,1,nil,tp)
