@@ -18,7 +18,7 @@ function c10010160.initial_effect(c)
 	e2:SetTarget(c10010160.target2)
 	e2:SetOperation(c10010160.desop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--draw
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(10010160,1))
 	e3:SetCategory(CATEGORY_DRAW)
@@ -42,7 +42,7 @@ function c10010160.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c10010160.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and re:GetHandler():IsType(TYPE_SPELL+TYPE_TRAP) and Duel.IsPlayerCanDraw(tp,2)
+	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and re:GetHandler():IsType(TYPE_SPELL+TYPE_TRAP) and Duel.IsPlayerCanDraw(tp,2)
 end
 function c10010160.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>1
@@ -59,7 +59,7 @@ function c10010160.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(c10010160.filter2,tp,LOCATION_DECK,0,2,nil,e,tp) then
 		local g=Duel.SelectMatchingCard(tp,c10010160.filter2,tp,LOCATION_DECK,0,2,2,nil,e,tp)
 		if g:GetCount()>0 then
-			Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_DEFENSE)
+			Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)
 		end
 	end
 end

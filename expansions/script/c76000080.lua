@@ -21,10 +21,10 @@ function c76000080.filter(c)
 end
 function c76000080.bktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c76000080.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c76000080.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,2,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c76000080.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c76000080.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,2,2,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,2,0,0)
+	local g=Duel.SelectTarget(tp,c76000080.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,2,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 end
 function c76000080.bkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)

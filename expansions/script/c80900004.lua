@@ -16,8 +16,12 @@ function c80900004.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(c80900004.discon)
 	e2:SetOperation(c80900004.setop)
 	c:RegisterEffect(e2)
+end
+function c80900004.discon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c80900004.setfilter,tp,LOCATION_DECK,0,1,nil)
 end
 function c80900004.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
