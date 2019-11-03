@@ -12,5 +12,13 @@ function c92900001.initial_effect(c)
 	c:RegisterEffect(e1)
 
 	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_DRAW)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetTarget(c92900001.tg)
+	e2:SetOperation(c92900001.op)
+	c:RegisterEffect(e2)
 	
 end
