@@ -3,7 +3,7 @@ function c60602000.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcCodeRep(c,99999999,3,false,true)
-	aux.AddContactFusionProcedure(c,Card.IsAbleToGraveAsCost,LOCATION_HAND,0,Duel.SendtoGrave,REASON_COST)
+	aux.AddContactFusionProcedure(c,Card.IsAbleToGraveAsCost,LOCATION_HAND,0,Duel.SendtoGrave,REASON_EFFECT)
 	--SpecialSummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(60602000,0))
