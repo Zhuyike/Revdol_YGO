@@ -18,6 +18,7 @@ end
 function c11110013.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,3)
 end
 function c11110013.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -27,7 +28,7 @@ function c11110013.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(1)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)	 
+	Duel.RegisterEffect(e1,tp)   
 	Duel.BreakEffect()
 	Duel.DiscardDeck(tp,3,REASON_EFFECT)
 end

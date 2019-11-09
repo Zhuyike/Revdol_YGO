@@ -35,6 +35,7 @@ end
 function c11110009.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
 end
 function c11110009.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

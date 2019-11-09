@@ -40,7 +40,7 @@ function c11110002.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToRemoveAsCost() end
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
 end
 function c11110002.damop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_EFFECT)>0 then

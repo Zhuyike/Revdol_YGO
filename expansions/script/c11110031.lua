@@ -46,7 +46,7 @@ function c11110031.discon1(e,tp,eg,ep,ev,re,r,rp)
 end
 function c11110031.distg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(c11110031.filter,tp,LOCATION_DECK,0,1,nil)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,tp,LOCATION_DECK)
 end
 function c11110031.disop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

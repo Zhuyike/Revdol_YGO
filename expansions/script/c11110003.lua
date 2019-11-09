@@ -22,7 +22,7 @@ end
 function c11110003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES+CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
 end
 function c11110003.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c11110003.cfilter,1,nil,tp,e)

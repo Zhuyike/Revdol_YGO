@@ -5,6 +5,7 @@ function c11110008.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCondition(c11110008.condtion)
+	e1:SetTarget(c11110008.distg)
 	e1:SetOperation(c11110008.operation)
 	c:RegisterEffect(e1)
 
@@ -16,7 +17,10 @@ function c11110008.condtion(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp
 
 end
-
+function c11110008.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
+end
 function c11110008.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 	local gp=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,e:GetHandler())
