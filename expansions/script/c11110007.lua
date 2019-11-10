@@ -12,7 +12,7 @@ function c11110007.initial_effect(c)
 	c:RegisterEffect(e1)  
 end
 function c11110007.filter(c)
-	return c:IsSetCard(0xff00) and c:IsAbleToHand()
+	return c:IsSetCard(0xff00) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c11110007.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetMatchingGroupCount(c11110007.filter,tp,LOCATION_DECK,0,1,nil)>0 end
