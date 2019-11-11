@@ -61,6 +61,6 @@ end
 function c11110001.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(c11110001.filter_x,tp,LOCATION_GRAVE,0,1,nil) then
 		local num=Duel.GetMatchingGroupCount(c11110001.filter_x,tp,LOCATION_GRAVE,0,nil)
-		Duel.Damage(1-tp,num*500,REASON_EFFECT)
+		Duel.Damage(1-tp,num*300,REASON_EFFECT)
 	end
 end
