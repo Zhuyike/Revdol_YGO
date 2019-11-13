@@ -11,7 +11,7 @@ end
 
 function c11110019.actcona(e)
 	local tp=e:GetHandler():GetControler()
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0) <= Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0) < Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 end
 
 function c11110019.spfilter(c,e,tp)
