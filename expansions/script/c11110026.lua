@@ -14,13 +14,10 @@ function c11110026.tgfilter(c,tp)
 end
 function c11110026.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(c11110026.tgfilter,tp,LOCATION_DECK,0,1,nil,tp)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
 end
 function c11110026.activate(e,tp,eg,ep,ev,re,r,rp)  
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c11110026.tgfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
 	local tc=g:GetFirst()
 	Duel.SendtoGrave(tc,REASON_EFFECT)
-	Duel.BreakEffect()
-	Duel.DiscardDeck(tp,1,REASON_EFFECT)
 end

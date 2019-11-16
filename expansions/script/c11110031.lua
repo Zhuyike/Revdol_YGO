@@ -57,8 +57,6 @@ function c11110031.disop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g1=Duel.SelectMatchingCard(tp,c11110031.filter,tp,LOCATION_DECK,0,1,1,nil)
 		Duel.SendtoGrave(g1,REASON_EFFECT)
-		Duel.BreakEffect()
-		Duel.DiscardDeck(tp,3,REASON_EFFECT)
 	end
 end
 function c11110031.filter2(c)

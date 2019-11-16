@@ -14,12 +14,12 @@ function c11110012.initial_effect(c)
 end
 
 function c11110012.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,3)  end
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,0,0,tp,3)
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2)  end
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,0,0,tp,2)
 end
 
 function c11110012.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g1=Duel.GetDecktopGroup(tp,3)
+	local g1=Duel.GetDecktopGroup(tp,2)
 	Duel.SendtoGrave(g1,REASON_EFFECT)   
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
