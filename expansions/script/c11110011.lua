@@ -33,8 +33,9 @@ function c11110011.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c11110011.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
-	local tc=g:GetFirst()
-	local nu=tc:GetCode()
-	local hd=Duel.GetMatchingGroup(c11110011.filter2,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_DECK,0,nil,nu)
-	Duel.SendtoGrave(Group.__add(tc,hd),REASON_EFFECT)
+		local tc=g:GetFirst()
+		local nu=tc:GetCode()
+		local hd=Duel.GetMatchingGroup(c11110011.filter2,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_DECK,0,nil,nu)
+		Duel.SendtoGrave(Group.__add(tc,hd),REASON_EFFECT)
+	end
 end
