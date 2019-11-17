@@ -39,7 +39,10 @@ function c11110001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c11110001.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,2,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND+CATEGORY_SEARCH,nil,2,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
-function c11110001.spop(e,tp,eg,ep,ev,re,r,rp)
+function c11110001.spcon(e,tp,eg,ep,ev,re,r,rp,chk)
+	return Duel.IsExistingMatchingCard(c11110001.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,2,nil)
+end
+function c11110001.sppop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(c11110001.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,2,nil) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c11110001.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,2,2,nil)
@@ -47,6 +50,19 @@ function c11110001.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(g,tp,REASON_EFFECT)
 		end
 	end
+end
+function c11110001.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(11110001,1))
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetReset(RESET_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCondition(c11110001.spcon)
+	e1:SetOperation(c11110001.sppop)
+	Duel.RegisterEffect(e1,tp)
 end
 function c11110001.filter_x(c)
 	return c:IsSetCard(0xff00) and c:IsType(TYPE_MONSTER)
