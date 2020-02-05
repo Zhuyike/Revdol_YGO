@@ -49,7 +49,7 @@ function c12220360.indfilter(c)
 	return   c:IsCode(12220370)
 end
 function c12220360.indcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(c12220360.indfilter,tp,0,LOCATION_MZONE,1,nil)>0
+	return Duel.IsExistingMatchingCard(c12220360.indfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c12220360.condition(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end

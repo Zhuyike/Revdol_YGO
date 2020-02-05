@@ -3,7 +3,7 @@ function c12220370.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcCode2(c,12220050,12220060,true,true)
-	aux.AddContactFusionProcedure(c,Card.IsAbleToRemoveAsCost,LOCATION_ONFIELD+LOCATION_GRAVE,0,Duel.Remove,POS_FACEUP,REASON_COST)	
+	aux.AddContactFusionProcedure(c,Card.IsAbleToGraveAsCost,LOCATION_MZONE,0,Duel.SendtoGrave,REASON_COST) 
 	--dmg
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -45,8 +45,11 @@ function c12220370.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Damage(p,ct*500,REASON_EFFECT)
 end
+function c12220370.adfilter(c)
+	return c:IsFaceup() and c:GetCode()~=12220370 
+end
 function c12220370.adval(e,c)
-	local g=Duel.GetMatchingGroup(c:IsFaceup(),0,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(c12220370.adfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if g:GetCount()==0 then 
 		return 0
 	else
