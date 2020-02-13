@@ -21,7 +21,8 @@ function c12220010.initial_effect(c)
 	c:RegisterEffect(e3)  
 end
 function c12220010.atlimit(e,c)
-	return c:IsSetCard(0xff04) and not c:IsCode(12220010)
+	return c:IsSetCard(0xff04) 
+	--and not c:IsCode(12220010)
 end
 function c12220010.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

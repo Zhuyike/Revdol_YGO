@@ -12,7 +12,7 @@ function c12220240.initial_effect(c)
 end
 function c12220240.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp 
+	return at:GetControler()~=tp and Duel.GetAttackTarget()==e:GetHandler()
 end
 function c12220240.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttacker()

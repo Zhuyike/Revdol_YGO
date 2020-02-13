@@ -36,7 +36,7 @@ function c12220040.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
 	if g:GetCount()<2 or not Duel.IsPlayerCanDraw(tp) then return end
 	Duel.Draw(tp,2,REASON_EFFECT)
-	Duel.BreakEffect()
+	--Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local dg=g:Select(tp,2,2,nil)
 	Duel.SendtoDeck(dg,nil,2,REASON_EFFECT)
