@@ -28,7 +28,7 @@ function c12220010.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST+REASON_DISCARD)
 end
-function c12220010.spfilter(c,tc,e,tp)
+function c12220010.spfilter(c,e,tp)
 	return c:IsLevelBelow(6)  and c:IsSetCard(0xff04) and  c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c12220010.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
