@@ -22,14 +22,17 @@ function c12220100.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if tc:IsType(TYPE_SPELL) then
 		local tg=Duel.GetMatchingGroup(c12220100.filter,tp,LOCATION_MZONE,0,nil)
-		if gt:GetCount()>0 then
-			local act=gt:GetAttack()
+		if tg:GetCount()>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(12220100,0))
+			local target=Duel.SelectMatchingCard(tp,c12220100.filter,tp,LOCATION_MZONE,0,1,1,nil)
+			local tcc=target:GetFirst()
+			local act=tcc:GetAttack()
 			local en=Effect.CreateEffect(e:GetHandler())
 			en:SetType(EFFECT_TYPE_SINGLE)
 			en:SetCode(EFFECT_UPDATE_ATTACK)
 			en:SetReset(RESET_EVENT+RESETS_STANDARD)
 			en:SetValue(act)
-			tc:RegisterEffect(en)
+			tcc:RegisterEffect(en)
 		end
 	elseif tc:IsType(TYPE_TRAP) then
 		Duel.ConfirmCards(1-tp,tc)
