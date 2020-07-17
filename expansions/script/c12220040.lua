@@ -33,9 +33,9 @@ function c12220040.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function c12220040.activate(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Draw(tp,2,REASON_EFFECT)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
 	if g:GetCount()<2 or not Duel.IsPlayerCanDraw(tp) then return end
-	Duel.Draw(tp,2,REASON_EFFECT)
 	--Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local dg=g:Select(tp,2,2,nil)
